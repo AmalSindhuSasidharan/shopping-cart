@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const UserPage = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const returnUserData = async () => {
-      const response = await fetch("https://fakestoreapi.com/users/1");
-      const result = await response.json();
-      setUserData(result);
+      const response = await axios.get("https://fakestoreapi.com/users/1");
+      setUserData(response.data);
     };
     returnUserData();
   }, []);
@@ -15,6 +15,7 @@ const UserPage = () => {
   return (
     <div>
       <h1>User Info</h1>
+      {!userData && <p>Loading User Data...</p>}
       {userData && (
         <>
           Name: {userData.name.firstname} {userData.name.lastname} <br />

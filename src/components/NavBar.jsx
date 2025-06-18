@@ -10,9 +10,6 @@ const NavBar = () => {
       <div className="flex items-center gap-4">
         <NavLink
           to="/cart"
-          Add
-          commentMore
-          actions
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
         >
           View Cart

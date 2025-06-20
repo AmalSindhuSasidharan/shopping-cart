@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserThunk } from "../redux/userSlice";
 
 const UserPage = () => {
-  const [userData, setUserData] = useState(null);
+  const { loading, user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const returnUserData = async () => {
-      const response = await axios.get("https://fakestoreapi.com/users/1");
-      setUserData(response.data);
-    };
-    returnUserData();
+    dispatch(fetchUserThunk());
   }, []);
 
   return (
     <div>
       <h1>User Info</h1>
-      {!userData && <p>Loading User Data...</p>}
-      {userData && (
+      {loading && <p>Loading User Data...</p>}
+      {user && (
         <>
-          Name: {userData.name.firstname} {userData.name.lastname} <br />
-          UserName : {userData.username} <br />
-          EmailId: {userData.email}
+          Name: {user.name.firstname} {user.name.lastname} <br />
+          UserName : {user.username} <br />
+          EmailId: {user.email}
           <br />
-          Address : {userData.address.number}, {userData.address.street},{" "}
-          {userData.address.city}, {userData.address.zipcode}
+          Address : {user.address.number}, {user.address.street},{" "}
+          {user.address.city}, {user.address.zipcode}
         </>
       )}
     </div>
